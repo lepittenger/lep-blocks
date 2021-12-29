@@ -4,16 +4,16 @@ import { PREFIX } from '../../../utils/config';
 // import { __ } from '@wordpress/i18n';
 
 /**
- * Filter props for sitemap InnerBlocks.
+ * Filter props for sitemaps InnerBlocks.
  *
  * @author WebDevStudios
  * @since  2.0.0
  * @param {Object} [props] InnerBlocks props.
  */
 export const INNER_BLOCKS_PROPS = applyFilters(
-	`${ PREFIX }.sitemap.innerBlocksProps`,
+	`${ PREFIX }.sitemaps.innerBlocksProps`,
 	{
-		allowedBlocks: [ 'core/paragraph', 'core/buttons', 'core/image' ],
+		allowedBlocks: [ 'wdsblocks/accordion' ],
 		template: [
 			/** Sample core block template structure
 			  [

@@ -1,27 +1,27 @@
 import { PREFIX } from '../../../utils/config';
 
-const sitemapClass = `wp-block-${ PREFIX }-sitemap`;
+const sitemapClass = `wp-block-${ PREFIX }-sitemaps`;
 
 /**
- * Handle functionality related to the sitemap block block.
+ * Handle functionality related to the sitemaps block block.
  *
  * @author WebDevStudios
  * @since  2.0.0
  */
 const wdsBlocksSitemap = {
 	/**
-	 * Initial sitemap block setup.
+	 * Initial sitemaps block setup.
 	 *
 	 * @author WebDevStudios
 	 * @since  2.0.0
-	 * @return {?boolean} Return false if no the sitemap block found.
+	 * @return {?boolean} Return false if no the sitemaps block found.
 	 */
 	init: () => {
-		// Target sitemap block elements.
-		const sitemap = document.querySelectorAll( `.${ sitemapClass }` );
+		// Target sitemaps block elements.
+		const sitemaps = document.querySelectorAll( `.${ sitemapClass }` );
 
-		// Exit if no the sitemap block found.
-		if ( ! sitemap.length ) {
+		// Exit if no the sitemaps block found.
+		if ( ! sitemaps.length ) {
 			return false;
 		}
 	},

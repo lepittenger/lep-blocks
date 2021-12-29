@@ -12,8 +12,8 @@ import './frontend/style.scss';
  * @since  2.0.0
  * @see    https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType( `${ PREFIX }/sitemap`, {
-	title: __( 'Sitemap Block', 'wdsblocks' ),
+registerBlockType( `${ PREFIX }/sitemaps`, {
+	title: __( 'sitemaps Block', 'wdsblocks' ),
 	description: __(
 		'A sitemap block.',
 		'wdsblocks'

@@ -137,7 +137,7 @@ function Edit( props ) {
 			>
 				{ showPreview ? (
 					<div
-						className={ `${ className } sitemap` }
+						className={ `${ className } sitemaps` }
 						style={ backgroundStyle }
 						blockCount={ blockCount }
 						isAdmin={ true }
@@ -160,7 +160,7 @@ function Edit( props ) {
 					</div>
 				) : (
 					<div
-						className={ `${ className } sitemap` }
+						className={ `${ className } sitemaps` }
 						style={ backgroundStyle }
 					>
 						<RichText

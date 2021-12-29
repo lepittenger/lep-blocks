@@ -4,11 +4,11 @@
 //--------------------------------------------------------------
 @import '../../sass/mixins';
 
-[data-type='wdsblocks/sitemap'] {
+[data-type='wdsblocks/sitemaps'] {
 	margin-bottom: 0;
 	margin-top: 0;
 
-	.wp-block-wdsblocks-sitemap {
+	.wp-block-wdsblocks-sitemaps {
 		@include edit-mode;
 		@include preview-mode;
 
@@ -23,5 +23,5 @@
 				display: none;
 			} // .block-list-appender
 		} // &.preview-mode
-	} // .wp-block-wdsblocks-sitemap
-} // [data-type='wdsblocks/sitemap']
+	} // .wp-block-wdsblocks-sitemaps
+} // [data-type='wdsblocks/sitemaps']

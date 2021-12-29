@@ -18,10 +18,10 @@ export default function Save( props ) {
 		attributes: { title, contentStyle, backgroundStyle },
 	} = props;
 
-	const className = getBlockDefaultClassName( `${ PREFIX }/sitemap` );
+	const className = getBlockDefaultClassName( `${ PREFIX }/sitemaps` );
 
 	return (
-		<div className={ `${ className } sitemap` } style={ backgroundStyle }>
+		<div className={ `${ className } sitemaps` } style={ backgroundStyle }>
 			<RichText.Content
 				className="block-title"
 				style={ contentStyle }
