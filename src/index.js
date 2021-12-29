@@ -14,7 +14,8 @@ import './blocks/accordion-item';
 import './blocks/carousel';
 import './blocks/carousel-slide';
 import './blocks/starter';
-import './blocks/sitemap';
+import './blocks/sitemaps';
+import './blocks/sitemap-item';
 
 // Block Variations
 import './variations/cover';

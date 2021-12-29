@@ -1,0 +1,49 @@
+@import '../../sass/mixins';
+
+.wp-block-wdsblocks-sitemap {
+	@include edit-mode( '.edit-mode &' );
+}
+
+// Edit mode styles for sitemap children.
+.wp-block-wdsblocks-sitemaps {
+	&.edit-mode {
+		.wp-block-wdsblocks-sitemap {
+			padding: 1.5rem;
+
+			/* stylelint-disable */
+			&__title {
+				padding: 0;
+
+				&::before,
+				&::after {
+					display: none;
+				}
+			}
+
+			&__content {
+				display: block !important;
+				height: auto !important;
+
+				&--inner {
+					padding: 0;
+				}
+			}
+			/* stylelint-enable */
+		}
+	}
+}
+
+.editor-styles-wrapper {
+	.wp-block-wdsblocks-sitemap {
+		&__title {
+			position: relative;
+			width: 100%;
+			display: block;
+			text-align: left;
+			border: none;
+			margin: 0;
+			cursor: text;
+			font-size: 22px;
+		}
+	}
+}

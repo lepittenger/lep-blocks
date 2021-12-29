@@ -13,9 +13,9 @@ import './frontend/style.scss';
  * @see    https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
 registerBlockType( `${ PREFIX }/sitemaps`, {
-	title: __( 'sitemaps Block', 'wdsblocks' ),
+	title: __( 'Sitemaps Block', 'wdsblocks' ),
 	description: __(
-		'A sitemap block.',
+		'A dynamic sitemap block.',
 		'wdsblocks'
 	),
 	icon: 'admin-network',
