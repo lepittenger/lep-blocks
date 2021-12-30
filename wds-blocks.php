@@ -90,6 +90,32 @@ function register_block() {
 		]
 	);
 
+	register_block_type(
+		'wdsblocks/sitemaps',
+		[
+			'editor_script' => 'wdsblocks-editor-script',
+			'editor_style'  => 'wdsblocks-editor-style',
+			'style'         => 'wdsblocks-style',
+		]
+	);
+
+	register_block_type(
+		'wdsblocks/sitemap-item',
+		[
+			'render_callback' => __NAMESPACE__ . '\render_sitemap_item_block',
+			'attributes'      => [
+				'title'             => [
+					'type'    => 'string',
+					'default' => '',
+				],
+				'contentType' => [
+					'type'    => 'string',
+					'default' => 'lep_content_type',
+				],
+			],
+		]
+	);
+
 	// Register frontend script.
 	if ( file_exists( plugin_dir_path( __FILE__ ) . $frontend_script ) ) {
 		wp_enqueue_script(
@@ -126,3 +152,37 @@ function register_block_category( $categories, $post ) {
 	);
 }
 add_filter( 'block_categories_all', __NAMESPACE__ . '\register_block_category', 10, 2 );
+
+/**
+ * Render the Product List block.
+ *
+ * @param array  $attributes Block instance attributes.
+ * @param string $content    Block content, empty, as this is a dynamic block.
+ * @return string Block HTML content.
+ */
+function render_sitemap_item_block( $attributes, $content ) {
+
+	$args = array(
+		'post_type' => 'post',
+		'posts_per_page' => -1,
+	);
+
+	// The Query
+	$the_query = new \WP_Query( $args );
+
+	// The Loop
+	if ( $the_query->have_posts() ) :
+		$output = '<ul>';
+		while ( $the_query->have_posts() ) : $the_query->the_post();
+			$output .= '<li>' . get_the_title() . '</li>';
+		endwhile;
+		$output .= '</ul>';
+
+		wp_reset_postdata();
+
+	else :
+		$output .= '<p>Sorry, nothing found.</p>';
+	endif;
+
+	return $output;
+}

@@ -5,7 +5,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import { PREFIX } from '../../utils/config';
 import './frontend/style.scss';
 
-const BLOCKNAME = 'sitemap';
+const BLOCKNAME = 'sitemap-item';
 
 /**
  * Register block type definition.
@@ -15,12 +15,11 @@ const BLOCKNAME = 'sitemap';
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
 registerBlockType( `wdsblocks/${ BLOCKNAME }`, {
-	title: __( 'sitemap', 'wdsblocks' ),
+	title: __( 'Sitemap Block', 'wdsblocks' ),
 	description: __(
 		'An expand and collaspe editible content section.',
 		'wdsblocks'
 	),
-	icon: 'sort',
 	category: 'wds-blocks',
 	keywords: [ __( 'sitemap', 'wdsblocks' ) ],
 	supports: {
@@ -30,26 +29,12 @@ registerBlockType( `wdsblocks/${ BLOCKNAME }`, {
 	parent: [ 'wdsblocks/sitemap-group' ],
 	attributes: {
 		title: {
-			type: 'array',
-			source: 'children',
-			selector: `.wp-block-${ PREFIX }-${ BLOCKNAME }__title`,
-		},
-		clientId: {
 			type: 'string',
-			default: `${ BLOCKNAME }-item`,
 		},
-	},
-	example: {
-		innerBlocks: [
-			{
-				name: 'core/paragraph',
-				attributes: {
-					content: __(
-						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et eros eu felis.'
-					),
-				},
-			},
-		],
+		contentType: {
+			type: 'string',
+			default: 'lep_content_type',
+		},
 	},
 	edit,
 	save,

@@ -1,20 +1,15 @@
-import { RichText, InnerBlocks } from '@wordpress/block-editor';
+import ServerSideRender from '@wordpress/server-side-render';
+import { RichText } from '@wordpress/block-editor';
+import { SelectControl } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
+import { useBlockProps } from '@wordpress/block-editor';
+import { useState } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import { PREFIX } from '../../utils/config';
 import InputLabel from '../sitemaps/components/InputLabel';
 import './editor.scss';
-
-// Block types that cann be added to
-const ALLOWED_BLOCKS = applyFilters(
-	`${ PREFIX }.sitemap_allowed_blocks`,
-	[ 'core/image', 'core/heading', 'core/paragraph', 'core/list' ] // Default value.
-);
-
-// Set up props for InnerBlocks component.
-const innerBlocksProps = {
-	allowedBlocks: ALLOWED_BLOCKS,
-};
+import { Fragment } from 'react';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -23,10 +18,17 @@ const innerBlocksProps = {
  * @author WebDevStudios
  * @since 2.0.0
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
- * @param {Object} [props] Properties passed from the editor.
+ *
+ * Editing interface in the admin
+ *
+ * @param {Object} [props]    Properties passed from the editor.
+ * @param          attributes
+ * @param          isSelected
+ * @param          contentTypes
+ *
  * @return {WPElement} Element to render.
  */
-export default function Edit( props ) {
+export default function Edit( props, attributes, isSelected, contentTypes ) {
 	const {
 		attributes: { title },
 		setAttributes,
@@ -34,6 +36,16 @@ export default function Edit( props ) {
 		clientId,
 	} = props;
 
+	const posts = useSelect( ( select ) => {
+		return select( 'core' ).getEntityRecords( 'postType', 'post' );
+	}, [] );
+
+	const getPostTypeName = () => {
+		const [ contentType ] = contentTypes.filter( ( contentType ) =>
+			contentType.slug.includes( attributes.contentType )
+		);
+		return contentType.name;
+	};
 	return (
 		<div className={ className }>
 			<InputLabel
@@ -47,7 +59,7 @@ export default function Edit( props ) {
 				className={ `${ className }__title` }
 				onChange={ ( value ) => setAttributes( { title: value } ) }
 				value={ title ? title : '' }
-				placeholder={ __( 'WDS Sitemap Title', 'wdsblocks' ) }
+				placeholder={ __( 'Section Title', 'wdsblocks' ) }
 				aria-expanded="false"
 				aria-controls={ `${ PREFIX }-${ clientId }` }
 				allowedFormats={ [ 'core/bold', 'core/italic' ] }
@@ -63,7 +75,42 @@ export default function Edit( props ) {
 				id={ `${ PREFIX }-${ clientId }` }
 			>
 				<div className={ `${ className }__content--inner` }>
-					<InnerBlocks { ...innerBlocksProps } />
+					{ ! isSelected && (
+						<ServerSideRender
+							block="wdsblocks/sitemap-item"
+							attributes={ props.attributes }
+						/>
+					) }
+					{ isSelected && (
+						<Fragment>
+							<SelectControl
+								className="lep-sitemap__content_type"
+								label={ __( 'Data Type', 'wdsblocks' ) }
+								value={ attributes.contentType }
+								onChange={ ( contentType ) =>
+									setAttributes( {
+										contentType,
+									} )
+								}
+								options={ [
+									{
+										value: '',
+										label: __(
+											'Select a data type',
+											'wdsblocks'
+										),
+									},
+								].concat(
+									contentTypes.map( ( contentType ) => {
+										return {
+											label: contentType.name,
+											value: contentType.slug,
+										};
+									} )
+								)}
+							/>
+						</Fragment>
+					)}
 				</div>
 			</div>
 		</div>

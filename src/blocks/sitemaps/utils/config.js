@@ -13,7 +13,7 @@ import { PREFIX } from '../../../utils/config';
 export const INNER_BLOCKS_PROPS = applyFilters(
 	`${ PREFIX }.sitemaps.innerBlocksProps`,
 	{
-		allowedBlocks: [ 'wdsblocks/sitemap' ],
+		allowedBlocks: [ 'wdsblocks/sitemap-item' ],
 		template: [
 			/** Sample core block template structure
 			  [

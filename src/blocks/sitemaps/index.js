@@ -54,18 +54,6 @@ registerBlockType( `${ PREFIX }/sitemaps`, {
 		anchor: true,
 		html: false,
 	},
-	example: {
-		attributes: {
-			backgroundStyle: {
-				backgroundColor: '#40403F',
-			},
-			contentStyle: {
-				color: '#F47C48',
-				textAlign: 'center',
-			},
-			title: __( 'Sitemap Block', 'wdsblocks' ),
-		},
-	},
 	edit,
 	save,
 } );
