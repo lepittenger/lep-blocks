@@ -33,7 +33,7 @@ registerBlockType( `wdsblocks/${ BLOCKNAME }`, {
 		},
 		contentType: {
 			type: 'string',
-			default: 'lep_content_type',
+			default: '',
 		},
 	},
 	edit,

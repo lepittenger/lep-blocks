@@ -110,7 +110,7 @@ function register_block() {
 				],
 				'contentType' => [
 					'type'    => 'string',
-					'default' => 'lep_content_type',
+					'default' => '',
 				],
 			],
 		]

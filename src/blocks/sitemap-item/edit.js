@@ -1,7 +1,14 @@
+/* post types list */
+import isEmpty from 'lodash/isEmpty';
+import filter from 'lodash/filter';
+import includes from 'lodash/includes';
+
+/* WP dependencies */
 import ServerSideRender from '@wordpress/server-side-render';
 import { RichText } from '@wordpress/block-editor';
 import { SelectControl } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
+import { withSelect } from '@wordpress/data';
 import { useBlockProps } from '@wordpress/block-editor';
 import { useState } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
@@ -28,24 +35,19 @@ import { Fragment } from 'react';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit( props, attributes, isSelected, contentTypes ) {
+export default function Edit( props ) {
 	const {
 		attributes: { title },
 		setAttributes,
 		className,
-		clientId,
 	} = props;
 
-	const posts = useSelect( ( select ) => {
-		return select( 'core' ).getEntityRecords( 'postType', 'post' );
-	}, [] );
+	const postTypes = useSelect( ( select ) =>
+		select( 'core' ).getPostTypes( {
+			per_page: -1,
+		} )
+	);
 
-	const getPostTypeName = () => {
-		const [ contentType ] = contentTypes.filter( ( contentType ) =>
-			contentType.slug.includes( attributes.contentType )
-		);
-		return contentType.name;
-	};
 	return (
 		<div className={ className }>
 			<InputLabel
@@ -75,42 +77,40 @@ export default function Edit( props, attributes, isSelected, contentTypes ) {
 				id={ `${ PREFIX }-${ clientId }` }
 			>
 				<div className={ `${ className }__content--inner` }>
-					{ ! isSelected && (
+					{/* { ! isSelected && (
 						<ServerSideRender
 							block="wdsblocks/sitemap-item"
 							attributes={ props.attributes }
 						/>
-					) }
-					{ isSelected && (
-						<Fragment>
-							<SelectControl
-								className="lep-sitemap__content_type"
-								label={ __( 'Data Type', 'wdsblocks' ) }
-								value={ attributes.contentType }
-								onChange={ ( contentType ) =>
-									setAttributes( {
-										contentType,
-									} )
-								}
-								options={ [
-									{
-										value: '',
-										label: __(
-											'Select a data type',
-											'wdsblocks'
-										),
-									},
-								].concat(
-									contentTypes.map( ( contentType ) => {
-										return {
-											label: contentType.name,
-											value: contentType.slug,
-										};
-									} )
-								)}
-							/>
-						</Fragment>
-					)}
+					) } */}
+					<Fragment>
+						<SelectControl
+							className="lep-sitemap__content_type"
+							label={ __( 'Post Type', 'wdsblocks' ) }
+							value={ attributes.contentType }
+							onChange={ ( contentType ) =>
+								setAttributes( {
+									contentType,
+								} )
+							}
+							options={ [
+								{
+									value: '',
+									label: __(
+										'Select a post type',
+										'wdsblocks'
+									),
+								},
+							].concat(
+								postTypes.map( ( postType ) => {
+									return {
+										label: postType.name,
+										value: postType.slug,
+									};
+								} )
+							)}
+						/>
+					</Fragment>
 				</div>
 			</div>
 		</div>
