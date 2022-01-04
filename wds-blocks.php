@@ -110,7 +110,7 @@ function register_block() {
 				],
 				'contentType' => [
 					'type'    => 'string',
-					'default' => '',
+					'default' => 'post',
 				],
 			],
 		]
@@ -162,8 +162,14 @@ add_filter( 'block_categories_all', __NAMESPACE__ . '\register_block_category', 
  */
 function render_sitemap_item_block( $attributes, $content ) {
 
+	$post_type = '';
+
+	if ( ! empty( $attributes['contentType'] ) ) {
+		$post_type = $attributes['contentType'];
+	}
+
 	$args = array(
-		'post_type' => 'post',
+		'post_type' => $post_type,
 		'posts_per_page' => -1,
 	);
 

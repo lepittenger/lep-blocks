@@ -18,7 +18,6 @@ registerBlockType( `${ PREFIX }/sitemaps`, {
 		'A dynamic sitemap block.',
 		'wdsblocks'
 	),
-	icon: 'admin-network',
 	category: 'wds-blocks',
 	keywords: [ __( 'sitemap block, richtext', 'wdsblocks' ) ],
 	attributes: {
