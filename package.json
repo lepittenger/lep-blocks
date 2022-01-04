@@ -23,7 +23,7 @@
 	"main": "src/index.js",
 	"dependencies": {
 		"@glidejs/glide": "^3.4.1",
-		"@wordpress/block-editor": "^7.0.2",
+		"@wordpress/block-editor": "^8.0.13",
 		"@wordpress/blocks": "^11.1.0",
 		"@wordpress/components": "^17.0.0",
 		"@wordpress/compose": "^5.0.2",
@@ -34,6 +34,7 @@
 		"@wordpress/server-side-render": "^3.0.16",
 		"classnames": "^2.3.1",
 		"glob": "^7.2.0",
+		"lodash.filter": "^4.6.0",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2"
 	},
