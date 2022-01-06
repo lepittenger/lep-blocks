@@ -5399,11 +5399,11 @@ function Edit(props) {
     className,
     isSelected
   } = props;
-  const postTypes = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_7__.useSelect)(select => select('core').getPostTypes({
+  let postTypes = [];
+  postTypes = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_7__.useSelect)(select => select('core').getPostTypes({
     per_page: -1
   }));
-  console.log(props);
-  console.log(postTypes);
+  postTypes = postTypes.filter(postType => postType.viewable === true && postType.slug !== 'attachment');
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: className
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.RichText, {
