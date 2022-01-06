@@ -47,14 +47,14 @@ export default function Edit( props ) {
 		isSelected,
 	} = props;
 
-	const postTypes = useSelect( ( select ) =>
+	let postTypes = [];
+	postTypes = useSelect( ( select ) =>
 		select( 'core' ).getPostTypes( {
 			per_page: -1
 		} )
 	);
 
-	console.log( props );
-	console.log( postTypes );
+	postTypes = postTypes.filter( postType => postType.viewable === true );
 
 	return (
 		<div className={ className }>
