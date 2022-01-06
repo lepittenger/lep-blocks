@@ -54,7 +54,10 @@ export default function Edit( props ) {
 		} )
 	);
 
-	postTypes = postTypes.filter( postType => postType.viewable === true );
+	postTypes = postTypes.filter(
+		( postType ) =>
+			postType.viewable === true && postType.slug !== 'attachment'
+	);
 
 	return (
 		<div className={ className }>
