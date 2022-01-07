@@ -180,7 +180,7 @@ function render_sitemap_item_block( $attributes, $content ) {
 	if ( $the_query->have_posts() ) :
 		$output = '<ul>';
 		while ( $the_query->have_posts() ) : $the_query->the_post();
-			$output .= '<li>' . get_the_title() . '</li>';
+			$output .= '<li><a href="' . get_the_permalink() . '">' . get_the_title() . '</a></li>';
 		endwhile;
 		$output .= '</ul>';
 
