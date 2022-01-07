@@ -35,6 +35,10 @@ registerBlockType( `wdsblocks/${ BLOCKNAME }`, {
 			type: 'string',
 			default: 'post',
 		},
+		order: {
+			type: 'string',
+			default: 'DESC',
+		},
 	},
 	edit,
 	save,

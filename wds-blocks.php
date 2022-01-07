@@ -112,6 +112,10 @@ function register_block() {
 					'type'    => 'string',
 					'default' => 'post',
 				],
+				'order'       => [
+					'type'    => 'string',
+					'default' => 'DESC',
+				],
 			],
 		]
 	);
@@ -164,14 +168,24 @@ function render_sitemap_item_block( $attributes, $content ) {
 
 	$post_type = '';
 
+	// set up the variables
 	if ( ! empty( $attributes['contentType'] ) ) {
 		$post_type = $attributes['contentType'];
 	}
 
+	if ( ! empty( $attributes['order'] ) ) {
+		$order = $attributes['order'];
+	}
+
+	// set up the arguments
 	$args = array(
 		'post_type' => $post_type,
 		'posts_per_page' => -1,
 	);
+
+	if ( ! empty( $order ) ) {
+		$args['order'] = $order;
+	}
 
 	// The Query
 	$the_query = new \WP_Query( $args );

@@ -1,15 +1,15 @@
-/* post types list */
-import isEmpty from 'lodash/isEmpty';
-import filter from 'lodash/filter';
-import includes from 'lodash/includes';
-
-/* WP dependencies */
 import ServerSideRender from '@wordpress/server-side-render';
 import {
 	RichText,
-	useBlockProps
+	InspectorControls
 } from '@wordpress/block-editor';
-import { SelectControl } from '@wordpress/components';
+import {
+	SelectControl,
+	PanelBody,
+	PanelRow,
+	BaseControl,
+	ToggleControl,
+ } from '@wordpress/components';
 import {
 	useSelect,
 	withSelect
@@ -41,7 +41,7 @@ import { Fragment } from 'react';
  */
 export default function Edit( props ) {
 	const {
-		attributes: { title, contentType },
+		attributes: { title },
 		setAttributes,
 		className,
 		isSelected,
@@ -60,62 +60,83 @@ export default function Edit( props ) {
 	);
 
 	return (
-		<div className={ className }>
-			<RichText
-				tagName="h3"
-				role="button"
-				tabIndex="0"
-				className={ `${ className }__title` }
-				onChange={ ( value ) => setAttributes( { title: value } ) }
-				value={ title ? title : '' }
-				placeholder={ __( 'Section Title', 'wdsblocks' ) }
-				aria-expanded="false"
-				allowedFormats={ [ 'core/bold', 'core/italic' ] }
-			/>
-			<div
-				className={ `${ className }__content` }
-				aria-hidden="true"
-				tabIndex="-1"
-			>
-				<div className={ `${ className }__content--inner` }>
-					{ ! isSelected && (
-						<ServerSideRender
-							block="wdsblocks/sitemap-item"
-							attributes={ props.attributes }
+		<>
+			<InspectorControls>
+				<PanelBody title={ __( 'Settings', 'wdsblocks' ) }>
+					<PanelRow>
+						<SelectControl
+							label="Order"
+							value={ props.attributes.order }
+							options={ [
+								{ label: 'Ascending', value: 'ASC' },
+								{ label: 'Descending', value: 'DESC' },
+							] }
+							onChange={ ( order ) =>
+								setAttributes( {
+									order,
+								} )
+							}
 						/>
-					) }
-					{ isSelected && (
-						<Fragment>
-							<SelectControl
-								className="lep-sitemap__content_type"
-								label={ __( 'Post Type', 'wdsblocks' ) }
-								value={ props.attributes.contentType }
-								onChange={ ( contentType ) =>
-									setAttributes( {
-										contentType,
-									} )
-								}
-								options={ [
-									{
-										value: '',
-										label: __(
-											'Select a post type',
-											'wdsblocks'
-										),
-									},
-								].concat(
-									postTypes.map( ( postType ) => {
-										return {
-											label: postType.name,
-											value: postType.slug,
-										};
-									} )
-								)}
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
+			<div className={ className }>
+				<RichText
+					tagName="h3"
+					role="button"
+					tabIndex="0"
+					className={ `${ className }__title` }
+					onChange={ ( value ) => setAttributes( { title: value } ) }
+					value={ title ? title : '' }
+					placeholder={ __( 'Section Title', 'wdsblocks' ) }
+					aria-expanded="false"
+					allowedFormats={ [ 'core/bold', 'core/italic' ] }
+				/>
+				<div
+					className={ `${ className }__content` }
+					aria-hidden="true"
+					tabIndex="-1"
+				>
+					<div className={ `${ className }__content--inner` }>
+						{ ! isSelected && (
+							<ServerSideRender
+								block="wdsblocks/sitemap-item"
+								attributes={ props.attributes }
 							/>
-						</Fragment>
-					) }
+						) }
+						{ isSelected && (
+							<Fragment>
+								<SelectControl
+									className="lep-sitemap__content_type"
+									label={ __( 'Post Type', 'wdsblocks' ) }
+									value={ props.attributes.contentType }
+									onChange={ ( contentType ) =>
+										setAttributes( {
+											contentType,
+										} )
+									}
+									options={ [
+										{
+											value: '',
+											label: __(
+												'Select a post type',
+												'wdsblocks'
+											),
+										},
+									].concat(
+										postTypes.map( ( postType ) => {
+											return {
+												label: postType.name,
+												value: postType.slug,
+											};
+										} )
+									) }
+								/>
+							</Fragment>
+						) }
+					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }
