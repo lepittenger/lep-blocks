@@ -116,6 +116,10 @@ function register_block() {
 					'type'    => 'string',
 					'default' => 'DESC',
 				],
+				'orderby'       => [
+					'type'    => 'string',
+					'default' => 'post_date',
+				],
 			],
 		]
 	);
@@ -177,6 +181,10 @@ function render_sitemap_item_block( $attributes, $content ) {
 		$order = $attributes['order'];
 	}
 
+	if ( ! empty( $attributes['orderby'] ) ) {
+		$orderby = $attributes['orderby'];
+	}
+
 	// set up the arguments
 	$args = array(
 		'post_type' => $post_type,
@@ -185,6 +193,10 @@ function render_sitemap_item_block( $attributes, $content ) {
 
 	if ( ! empty( $order ) ) {
 		$args['order'] = $order;
+	}
+
+	if ( ! empty( $orderby ) ) {
+		$args['orderby'] = $orderby;
 	}
 
 	// The Query

@@ -50,7 +50,7 @@ export default function Edit( props ) {
 	let postTypes = [];
 	postTypes = useSelect( ( select ) =>
 		select( 'core' ).getPostTypes( {
-			per_page: -1
+			per_page: -1,
 		} )
 	);
 
@@ -68,12 +68,41 @@ export default function Edit( props ) {
 							label="Order"
 							value={ props.attributes.order }
 							options={ [
+								{ label: 'None', value: '' },
 								{ label: 'Ascending', value: 'ASC' },
 								{ label: 'Descending', value: 'DESC' },
 							] }
 							onChange={ ( order ) =>
 								setAttributes( {
 									order,
+								} )
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<SelectControl
+							label="Orderby"
+							value={ props.attributes.orderby }
+							options={ [
+								{ label: 'ID', value: 'ID' },
+								{ label: 'Author', value: 'author' },
+								{ label: 'Title', value: 'title' },
+								{ label: 'Name', value: 'name' },
+								{ label: 'Date', value: 'post_date' },
+								{
+									label: 'Last modified date',
+									value: 'modified',
+								},
+								{ label: 'Random', value: 'rand' },
+								{
+									label: 'Comment Count',
+									value: 'comment_count',
+								},
+								{ label: 'Menu Order', value: 'menu_order' },
+							] }
+							onChange={ ( orderby ) =>
+								setAttributes( {
+									orderby,
 								} )
 							}
 						/>
