@@ -7,6 +7,7 @@ import {
 	SelectControl,
 	PanelBody,
 	PanelRow,
+	ComboboxControl,
 	BaseControl,
 	ToggleControl,
  } from '@wordpress/components';
@@ -47,6 +48,7 @@ export default function Edit( props ) {
 		isSelected,
 	} = props;
 
+	// Post types
 	let postTypes = [];
 	postTypes = useSelect( ( select ) =>
 		select( 'core' ).getPostTypes( {
@@ -60,6 +62,32 @@ export default function Edit( props ) {
 				postType.viewable === true && postType.slug !== 'attachment'
 		);
 	}
+
+	// Taxonomy types
+	let taxonomyTypes = [];
+	taxonomyTypes = useSelect( ( select ) =>
+		select( 'core' ).getTaxonomies( {
+			per_page: -1,
+		} )
+	);
+
+	console.log( postTypes );
+	console.log( taxonomyTypes );
+
+	// if ( taxonomyTypes ) {
+	// 	taxonomyTypes = taxonomyTypes.filter(
+	// 		( taxonomyType ) =>
+	// 			includes( taxonomyType.types, 'product' )
+	// 	);
+	// }
+
+	// Category terms
+	let categoryTerms = [];
+	categoryTerms = useSelect( ( select ) =>
+		select( 'core' ).getPostTypes( {
+			per_page: -1,
+		} )
+	);
 
 	return (
 		<>
@@ -110,6 +138,25 @@ export default function Edit( props ) {
 						/>
 					</PanelRow>
 				</PanelBody>
+				{/* <PanelBody title={ __( 'Filters', 'wdsblocks' ) }>
+					<PanelRow>
+					<ComboboxControl
+						label="Font Size"
+						value={ fontSize }
+						onChange={ setFontSize }
+						options={ filteredOptions }
+						onFilterValueChange={ ( inputValue ) =>
+							setFilteredOptions(
+								options.filter( ( option ) =>
+									option.label
+										.toLowerCase()
+										.startsWith( inputValue.toLowerCase() )
+								)
+							)
+						}
+					/>
+					</PanelRow>
+				</PanelBody> */}
 			</InspectorControls>
 			<div className={ className }>
 				<RichText
@@ -137,7 +184,7 @@ export default function Edit( props ) {
 						) }
 						{ isSelected && (
 							<Fragment>
-								{postTypes && (
+								{ postTypes && (
 									<SelectControl
 										className="lep-sitemap__content_type"
 										label={ __( 'Post Type', 'wdsblocks' ) }
@@ -161,10 +208,20 @@ export default function Edit( props ) {
 													label: postType.name,
 													value: postType.slug,
 												};
-											} )
+											} ),
+											taxonomyTypes.map(
+												( taxonomyType ) => {
+													return {
+														label:
+															taxonomyType.name,
+														value:
+															taxonomyType.slug,
+													};
+												}
+											)
 										) }
 									/>
-								)}
+								) }
 							</Fragment>
 						) }
 					</div>
