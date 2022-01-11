@@ -54,10 +54,12 @@ export default function Edit( props ) {
 		} )
 	);
 
-	postTypes = postTypes.filter(
-		( postType ) =>
-			postType.viewable === true && postType.slug !== 'attachment'
-	);
+	if ( postTypes ) {
+		postTypes = postTypes.filter(
+			( postType ) =>
+				postType.viewable === true && postType.slug !== 'attachment'
+		);
+	}
 
 	return (
 		<>
@@ -135,32 +137,34 @@ export default function Edit( props ) {
 						) }
 						{ isSelected && (
 							<Fragment>
-								<SelectControl
-									className="lep-sitemap__content_type"
-									label={ __( 'Post Type', 'wdsblocks' ) }
-									value={ props.attributes.contentType }
-									onChange={ ( contentType ) =>
-										setAttributes( {
-											contentType,
-										} )
-									}
-									options={ [
-										{
-											value: '',
-											label: __(
-												'Select a post type',
-												'wdsblocks'
-											),
-										},
-									].concat(
-										postTypes.map( ( postType ) => {
-											return {
-												label: postType.name,
-												value: postType.slug,
-											};
-										} )
-									) }
-								/>
+								{postTypes && (
+									<SelectControl
+										className="lep-sitemap__content_type"
+										label={ __( 'Post Type', 'wdsblocks' ) }
+										value={ props.attributes.contentType }
+										onChange={ ( contentType ) =>
+											setAttributes( {
+												contentType,
+											} )
+										}
+										options={ [
+											{
+												value: '',
+												label: __(
+													'Select a post type',
+													'wdsblocks'
+												),
+											},
+										].concat(
+											postTypes.map( ( postType ) => {
+												return {
+													label: postType.name,
+													value: postType.slug,
+												};
+											} )
+										) }
+									/>
+								)}
 							</Fragment>
 						) }
 					</div>
