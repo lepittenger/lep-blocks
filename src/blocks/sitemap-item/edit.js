@@ -71,23 +71,14 @@ export default function Edit( props ) {
 		} )
 	);
 
-	console.log( postTypes );
-	console.log( taxonomyTypes );
-
-	// if ( taxonomyTypes ) {
-	// 	taxonomyTypes = taxonomyTypes.filter(
-	// 		( taxonomyType ) =>
-	// 			includes( taxonomyType.types, 'product' )
-	// 	);
-	// }
-
-	// Category terms
-	let categoryTerms = [];
-	categoryTerms = useSelect( ( select ) =>
-		select( 'core' ).getPostTypes( {
+	let categoriesFilter = [];
+	categoriesFilter = useSelect( ( select ) =>
+		select( 'core' ).getEntityRecords( 'taxonomy', 'category', {
 			per_page: -1,
 		} )
 	);
+	console.log( postTypes );
+	console.log( categoriesFilter );
 
 	return (
 		<>
@@ -137,26 +128,34 @@ export default function Edit( props ) {
 							}
 						/>
 					</PanelRow>
+					{ categoriesFilter && (
+						<PanelRow>
+							<ComboboxControl
+								label="Categories Filters"
+								value={ props.attributes.categoriesFilter }
+								onChange={ categoriesFilter }
+								options={ [
+									{
+										value: '',
+										label: __(
+											'Select a category',
+											'wdsblocks'
+										),
+									},
+								].concat(
+									categoriesFilter.map(
+										( categoryFilter ) => {
+											return {
+												label: categoryFilter.name,
+												value: categoryFilter.slug,
+											};
+										}
+									)
+								) }
+							/>
+						</PanelRow>
+					) }
 				</PanelBody>
-				{/* <PanelBody title={ __( 'Filters', 'wdsblocks' ) }>
-					<PanelRow>
-					<ComboboxControl
-						label="Font Size"
-						value={ fontSize }
-						onChange={ setFontSize }
-						options={ filteredOptions }
-						onFilterValueChange={ ( inputValue ) =>
-							setFilteredOptions(
-								options.filter( ( option ) =>
-									option.label
-										.toLowerCase()
-										.startsWith( inputValue.toLowerCase() )
-								)
-							)
-						}
-					/>
-					</PanelRow>
-				</PanelBody> */}
 			</InspectorControls>
 			<div className={ className }>
 				<RichText

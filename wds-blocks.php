@@ -116,9 +116,13 @@ function register_block() {
 					'type'    => 'string',
 					'default' => 'DESC',
 				],
-				'orderby'       => [
+				'orderby'     => [
 					'type'    => 'string',
 					'default' => 'post_date',
+				],
+				'categoriesFilter' => [
+					'type'         => 'string',
+					'default'      => '',
 				],
 			],
 		]
@@ -171,10 +175,16 @@ add_filter( 'block_categories_all', __NAMESPACE__ . '\register_block_category', 
 function render_sitemap_item_block( $attributes, $content ) {
 
 	$post_type = '';
+	$query_type = '';
 
 	// set up the variables
 	if ( ! empty( $attributes['contentType'] ) ) {
 		$post_type = $attributes['contentType'];
+	}
+
+	// is it a post, page, cpt?
+	if ( get_post_type_object( $post_type ) ) {
+		$query_type = 'wp_query';
 	}
 
 	if ( ! empty( $attributes['order'] ) ) {

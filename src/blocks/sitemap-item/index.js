@@ -43,6 +43,10 @@ registerBlockType( `wdsblocks/${ BLOCKNAME }`, {
 			type: 'string',
 			default: 'post_date',
 		},
+		categoriesFilter: {
+			type: 'string',
+			default: '',
+		},
 	},
 	edit,
 	save,
