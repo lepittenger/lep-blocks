@@ -124,6 +124,18 @@ function register_block() {
 					'type'         => 'string',
 					'default'      => '',
 				],
+				'tagsFilter' => [
+					'type'         => 'string',
+					'default'      => '',
+				],
+				'authorFilter' => [
+					'type'         => 'string',
+					'default'      => '',
+				],
+				'numberOfPosts' => [
+					'type'         => 'number',
+					'default'      => '-1',
+				],
 			],
 		]
 	);
@@ -188,35 +200,33 @@ function render_sitemap_item_block( $attributes, $content ) {
 		$query_type = 'wp_query';
 	}
 
-	if ( ! empty( $attributes['order'] ) ) {
-		$order = $attributes['order'];
-	}
-
-	if ( ! empty( $attributes['orderby'] ) ) {
-		$orderby = $attributes['orderby'];
-	}
-
-	if ( ! empty( $attributes['categoriesFilter'] ) ) {
-		$categoriesFilter = $attributes['categoriesFilter'];
-	}
-
 	// set up the arguments
 	$args = array(
 		'post_type' => $post_type,
 		'posts_per_page' => -1,
 	);
 
-	if ( ! empty( $order ) ) {
-		$args['order'] = $order;
+	if ( ! empty( $attributes['order'] ) ) {
+		$args['order'] = $attributes['order'];
 	}
 
-	if ( ! empty( $orderby ) ) {
-		$args['orderby'] = $orderby;
+	if ( ! empty( $attributes['orderby'] ) ) {
+		$args['orderby'] = $attributes['orderby'];
 	}
 
-	if ( ! empty( $categoriesFilter ) ) {
-		$args['category_name'] = $categoriesFilter;
+	if ( ! empty( $attributes['categoriesFilter'] ) ) {
+		$args['category_name'] = $attributes['categoriesFilter'];
 	}
+
+	if ( ! empty( $attributes['tagsFilter'] ) ) {
+		$args['tag'] = $attributes['tagsFilter'];
+	}
+
+	if ( ! empty( $attributes['authorFilter'] ) ) {
+		$args['author_name'] = $attributes['authorFilter'];
+	}
+
+	//var_dump($attributes);
 
 	// The Query
 	$the_query = new \WP_Query( $args );

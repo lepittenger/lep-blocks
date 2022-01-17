@@ -47,6 +47,18 @@ registerBlockType( `wdsblocks/${ BLOCKNAME }`, {
 			type: 'string',
 			default: '',
 		},
+		tagsFilter: {
+			type: 'string',
+			default: '',
+		},
+		authorFilter: {
+			type: 'string',
+			default: '',
+		},
+		numberOfPosts: {
+			type: 'number',
+			default: '-1',
+		},
 	},
 	edit,
 	save,

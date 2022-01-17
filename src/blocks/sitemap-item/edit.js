@@ -8,12 +8,9 @@ import {
 	PanelBody,
 	PanelRow,
 	ComboboxControl,
-	BaseControl,
-	ToggleControl,
  } from '@wordpress/components';
 import {
 	useSelect,
-	withSelect
 } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
@@ -76,6 +73,18 @@ export default function Edit( props ) {
 		select( 'core' ).getEntityRecords( 'taxonomy', 'category', {
 			per_page: -1,
 		} )
+	);
+
+	let tagsFilter = [];
+	tagsFilter = useSelect( ( select ) =>
+		select( 'core' ).getEntityRecords( 'taxonomy', 'post_tag', {
+			per_page: -1,
+		} )
+	);
+
+	let authorFilter = [];
+	authorFilter = useSelect( ( select ) =>
+		select( 'core' ).getUsers( { who: 'authors' } )
 	);
 
 	return (
@@ -157,6 +166,64 @@ export default function Edit( props ) {
 							/>
 						</PanelRow>
 					) }
+					{ tagsFilter && (
+						<PanelRow>
+							<ComboboxControl
+								label="Tags Filter"
+								value={ props.attributes.tagsFilter }
+								onChange={ ( tagsFilter ) =>
+									setAttributes( {
+										tagsFilter,
+									} )
+								}
+								options={ [
+									{
+										value: '',
+										label: __(
+											'Select a tag',
+											'wdsblocks'
+										),
+									},
+								].concat(
+									tagsFilter.map( ( tagFilter ) => {
+										return {
+											label: tagFilter.name,
+											value: tagFilter.slug,
+										};
+									} )
+								) }
+							/>
+						</PanelRow>
+					) }
+					{ authorFilter && (
+						<PanelRow>
+							<ComboboxControl
+								label="Authors Filter"
+								value={ props.attributes.authorFilter }
+								onChange={ ( authorFilter ) =>
+									setAttributes( {
+										authorFilter,
+									} )
+								}
+								options={ [
+									{
+										value: '',
+										label: __(
+											'Select an author',
+											'wdsblocks'
+										),
+									},
+								].concat(
+									authorFilter.map( ( authorFilter ) => {
+										return {
+											label: authorFilter.name,
+											value: authorFilter.name,
+										};
+									} )
+								) }
+							/>
+						</PanelRow>
+					) }
 				</PanelBody>
 			</InspectorControls>
 			<div className={ className }>
@@ -193,10 +260,10 @@ export default function Edit( props ) {
 										'core/italic',
 									] }
 								/>
-							<Fragment>
-								{ postTypes && (
-									<SelectControl
-										className="lep-sitemap__content_type"
+								<Fragment>
+									{ postTypes && (
+										<SelectControl
+											className="lep-sitemap__content_type"
 											label={ __(
 												'Post Type',
 												'wdsblocks'
@@ -204,40 +271,40 @@ export default function Edit( props ) {
 											value={
 												props.attributes.contentType
 											}
-										onChange={ ( contentType ) =>
-											setAttributes( {
-												contentType,
-											} )
-										}
-										options={ [
-											{
-												value: '',
-												label: __(
-													'Select a post type',
-													'wdsblocks'
-												),
-											},
-										].concat(
-											postTypes.map( ( postType ) => {
-												return {
-													label: postType.name,
-													value: postType.slug,
-												};
-											} ),
-											taxonomyTypes.map(
-												( taxonomyType ) => {
+											onChange={ ( contentType ) =>
+												setAttributes( {
+													contentType,
+												} )
+											}
+											options={ [
+												{
+													value: '',
+													label: __(
+														'Select a post type',
+														'wdsblocks'
+													),
+												},
+											].concat(
+												postTypes.map( ( postType ) => {
 													return {
-														label:
-															taxonomyType.name,
-														value:
-															taxonomyType.slug,
+														label: postType.name,
+														value: postType.slug,
 													};
-												}
-											)
-										) }
-									/>
-								) }
-							</Fragment>
+												} ),
+												taxonomyTypes.map(
+													( taxonomyType ) => {
+														return {
+															label:
+																taxonomyType.name,
+															value:
+																taxonomyType.slug,
+														};
+													}
+												)
+											) }
+										/>
+									) }
+								</Fragment>
 							</>
 						) }
 					</div>
