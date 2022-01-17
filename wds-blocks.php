@@ -195,6 +195,10 @@ function render_sitemap_item_block( $attributes, $content ) {
 		$orderby = $attributes['orderby'];
 	}
 
+	if ( ! empty( $attributes['categoriesFilter'] ) ) {
+		$categoriesFilter = $attributes['categoriesFilter'];
+	}
+
 	// set up the arguments
 	$args = array(
 		'post_type' => $post_type,
@@ -209,12 +213,20 @@ function render_sitemap_item_block( $attributes, $content ) {
 		$args['orderby'] = $orderby;
 	}
 
+	if ( ! empty( $categoriesFilter ) ) {
+		$args['category_name'] = $categoriesFilter;
+	}
+
 	// The Query
 	$the_query = new \WP_Query( $args );
 
+	if ( ! empty( $attributes['title'] ) ) {
+		$output .= '<h3>' . $attributes['title'] . '</h3>';
+	}
+
 	// The Loop
 	if ( $the_query->have_posts() ) :
-		$output = '<ul>';
+		$output .= '<ul>';
 		while ( $the_query->have_posts() ) : $the_query->the_post();
 			$output .= '<li><a href="' . get_the_permalink() . '">' . get_the_title() . '</a></li>';
 		endwhile;
