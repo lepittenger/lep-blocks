@@ -77,8 +77,6 @@ export default function Edit( props ) {
 			per_page: -1,
 		} )
 	);
-	console.log( postTypes );
-	console.log( categoriesFilter );
 
 	return (
 		<>
@@ -133,7 +131,11 @@ export default function Edit( props ) {
 							<ComboboxControl
 								label="Categories Filters"
 								value={ props.attributes.categoriesFilter }
-								onChange={ categoriesFilter }
+								onChange={ ( categoriesFilter ) =>
+									setAttributes( {
+										categoriesFilter,
+									} )
+								}
 								options={ [
 									{
 										value: '',
