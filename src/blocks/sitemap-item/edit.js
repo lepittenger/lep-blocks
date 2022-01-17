@@ -129,7 +129,7 @@ export default function Edit( props ) {
 					{ categoriesFilter && (
 						<PanelRow>
 							<ComboboxControl
-								label="Categories Filters"
+								label="Categories Filter"
 								value={ props.attributes.categoriesFilter }
 								onChange={ ( categoriesFilter ) =>
 									setAttributes( {
