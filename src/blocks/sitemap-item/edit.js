@@ -160,17 +160,6 @@ export default function Edit( props ) {
 				</PanelBody>
 			</InspectorControls>
 			<div className={ className }>
-				<RichText
-					tagName="h3"
-					role="button"
-					tabIndex="0"
-					className={ `${ className }__title` }
-					onChange={ ( value ) => setAttributes( { title: value } ) }
-					value={ title ? title : '' }
-					placeholder={ __( 'Section Title', 'wdsblocks' ) }
-					aria-expanded="false"
-					allowedFormats={ [ 'core/bold', 'core/italic' ] }
-				/>
 				<div
 					className={ `${ className }__content` }
 					aria-hidden="true"
@@ -184,12 +173,37 @@ export default function Edit( props ) {
 							/>
 						) }
 						{ isSelected && (
+							<>
+								<RichText
+									tagName="h3"
+									role="button"
+									tabIndex="0"
+									className={ `${ className }__title` }
+									onChange={ ( value ) =>
+										setAttributes( { title: value } )
+									}
+									value={ title ? title : '' }
+									placeholder={ __(
+										'Section Title',
+										'wdsblocks'
+									) }
+									aria-expanded="false"
+									allowedFormats={ [
+										'core/bold',
+										'core/italic',
+									] }
+								/>
 							<Fragment>
 								{ postTypes && (
 									<SelectControl
 										className="lep-sitemap__content_type"
-										label={ __( 'Post Type', 'wdsblocks' ) }
-										value={ props.attributes.contentType }
+											label={ __(
+												'Post Type',
+												'wdsblocks'
+											) }
+											value={
+												props.attributes.contentType
+											}
 										onChange={ ( contentType ) =>
 											setAttributes( {
 												contentType,
@@ -224,6 +238,7 @@ export default function Edit( props ) {
 									/>
 								) }
 							</Fragment>
+							</>
 						) }
 					</div>
 				</div>
