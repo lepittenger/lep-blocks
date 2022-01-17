@@ -176,6 +176,7 @@ function render_sitemap_item_block( $attributes, $content ) {
 
 	$post_type = '';
 	$query_type = '';
+	$output = '';
 
 	// set up the variables
 	if ( ! empty( $attributes['contentType'] ) ) {
