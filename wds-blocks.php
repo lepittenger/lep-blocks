@@ -189,47 +189,51 @@ function render_sitemap_item_block( $attributes, $content ) {
 	$post_type = '';
 	$query_type = '';
 	$output = '';
+	$is_category_list = '';
 
 	// set up the variables
 	if ( ! empty( $attributes['contentType'] ) ) {
 		$post_type = $attributes['contentType'];
 	}
 
-	// is it a post, page, cpt?
-	if ( get_post_type_object( $post_type ) ) {
-		$query_type = 'wp_query';
-	}
-
-	// set up the arguments
-	$args = array(
+	// set up the arguments for WP_QUERY
+	$wp_query_args = array(
 		'post_type' => $post_type,
 		'posts_per_page' => -1,
 	);
 
 	if ( ! empty( $attributes['order'] ) ) {
-		$args['order'] = $attributes['order'];
+		$wp_query_args['order'] = $attributes['order'];
 	}
 
 	if ( ! empty( $attributes['orderby'] ) ) {
-		$args['orderby'] = $attributes['orderby'];
+		$wp_query_args['orderby'] = $attributes['orderby'];
 	}
 
 	if ( ! empty( $attributes['categoriesFilter'] ) ) {
-		$args['category_name'] = $attributes['categoriesFilter'];
+		$wp_query_args['category_name'] = $attributes['categoriesFilter'];
 	}
 
 	if ( ! empty( $attributes['tagsFilter'] ) ) {
-		$args['tag'] = $attributes['tagsFilter'];
+		$wp_query_args['tag'] = $attributes['tagsFilter'];
 	}
 
 	if ( ! empty( $attributes['authorFilter'] ) ) {
-		$args['author_name'] = $attributes['authorFilter'];
+		$wp_query_args['author_name'] = $attributes['authorFilter'];
 	}
 
-	//var_dump($attributes);
+	if ( ! empty( $attributes['contentType'] ) ) {
+		$category_list = wp_list_categories( array(
+			'echo'     => 0,
+			'taxonomy' => $attributes['contentType'],
+			'order'    => $attributes['order'],
+			'orderby'  => $attributes['orderby'],
+			'title_li' => '',
+		) );
+	}
 
 	// The Query
-	$the_query = new \WP_Query( $args );
+	$the_query = new \WP_Query( $wp_query_args );
 
 	if ( ! empty( $attributes['title'] ) ) {
 		$output .= '<h3>' . $attributes['title'] . '</h3>';
@@ -245,6 +249,8 @@ function render_sitemap_item_block( $attributes, $content ) {
 
 		wp_reset_postdata();
 
+	elseif ( ! empty( $category_list ) ) :
+		$output .= $category_list;
 	else :
 		$output .= '<p>Sorry, nothing found.</p>';
 	endif;
