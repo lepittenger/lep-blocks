@@ -73,24 +73,6 @@ function register_block() {
 
 	// Register blocks with WordPress.
 	register_block_type(
-		'wdsblocks/carousel',
-		[
-			'editor_script' => 'wdsblocks-editor-script',
-			'editor_style'  => 'wdsblocks-editor-style',
-			'style'         => 'wdsblocks-style',
-		]
-	);
-
-	register_block_type(
-		'wdsblocks/carousel-slide',
-		[
-			'editor_script' => 'wdsblocks-editor-script',
-			'editor_style'  => 'wdsblocks-editor-style',
-			'style'         => 'wdsblocks-style',
-		]
-	);
-
-	register_block_type(
 		'wdsblocks/sitemaps',
 		[
 			'editor_script' => 'wdsblocks-editor-script',
